@@ -1,0 +1,42 @@
+{
+  "name": "ae-fx-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "name": "Matt DesLauriers",
+    "email": "dave.des@gmail.com",
+    "url": "https://github.com/mattdesl"
+  },
+  "dependencies": {
+    "ae-to-json": "^1.1.1",
+    "ae-to-json-cli": "^1.0.0",
+    "babel-polyfill": "^6.8.0",
+    "dom-css": "^2.0.0",
+    "dom-events": "^0.1.1",
+    "keyframes": "^2.3.0",
+    "raf-loop": "^1.1.3",
+    "simple-media-element": "^1.1.0",
+    "three": "^0.76.1"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.6.0",
+    "babelify": "^7.3.0",
+    "budo": "^8.2.2"
+  },
+  "scripts": {
+    "test": "node test.js",
+    "ae": "ae-to-json > out.json",
+    "start": "budo index.js:bundle.js --live -- -t babelify"
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Jam3/ae-fx-test.git"
+  },
+  "homepage": "https://github.com/Jam3/ae-fx-test",
+  "bugs": {
+    "url": "https://github.com/Jam3/ae-fx-test/issues"
+  }
+}
