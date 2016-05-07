@@ -1,5 +1,5 @@
 {
-  "name": "ae-fx-test",
+  "name": "ae-tracker-test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -33,10 +33,10 @@
   "keywords": [],
   "repository": {
     "type": "git",
-    "url": "git://github.com/Jam3/ae-fx-test.git"
+    "url": "git://github.com/Jam3/ae-tracker-test.git"
   },
-  "homepage": "https://github.com/Jam3/ae-fx-test",
+  "homepage": "https://github.com/Jam3/ae-tracker-test",
   "bugs": {
-    "url": "https://github.com/Jam3/ae-fx-test/issues"
+    "url": "https://github.com/Jam3/ae-tracker-test/issues"
   }
 }
