@@ -9,7 +9,7 @@
   "isProfessionalVersion": true,
   "isoLanguage": "en_US",
   "language": 1612,
-  "memoryInUse": 2892255232,
+  "memoryInUse": 414380032,
   "saveProjectOnCrash": true,
   "version": "13.7.2x3",
   "project": {
@@ -17,8 +17,9 @@
     "feetFramesFilmType": 2213,
     "footageTimecodeDisplayStartType": 2012,
     "framesCountType": 2414,
-    "numItems": 6,
-    "revision": 542,
+    "numItems": 3,
+    "revision": 3206,
+    "selection": [],
     "timeDisplayType": 1812,
     "items": [
       {
@@ -82,7 +83,6 @@
           1,
           1
         ],
-        "selected": true,
         "selectedLayers": [],
         "selectedProperties": [],
         "shutterAngle": 180,
@@ -14564,13 +14564,13 @@
             "enabled": true,
             "frameBlendingType": "NO_FRAME_BLEND",
             "hasVideo": true,
-            "height": 480,
+            "height": 1080,
             "index": 2,
             "isModified": true,
             "isNameFromSource": true,
             "label": 1,
             "matchName": "ADBE AV Layer",
-            "name": "Track Solid 1",
+            "name": "Dark Gray Solid 1",
             "numProperties": 11,
             "outPoint": 7.58333333333333,
             "parent": null,
@@ -14582,7 +14582,7 @@
             "stretch": 100,
             "threeDLayer": true,
             "trackMatteType": 4812,
-            "width": 480,
+            "width": 1080,
             "properties": {
               "Marker": {
                 "active": true,
@@ -14669,16 +14669,16 @@
                   "selectedKeys": [],
                   "unitsText": "pixels",
                   "value": [
-                    240,
-                    240,
+                    540,
+                    540,
                     0
                   ],
                   "keyframes": [
                     [
                       0,
                       [
-                        240,
-                        240,
+                        540,
+                        540,
                         0
                       ]
                     ]
@@ -14701,17 +14701,17 @@
                   "selectedKeys": [],
                   "unitsText": "pixels",
                   "value": [
-                    -749.437432273234,
-                    1449.87391214164,
-                    5351.7338198328
+                    -1447.5364337426,
+                    -48.9139026299224,
+                    4419.283709836
                   ],
                   "keyframes": [
                     [
                       0,
                       [
-                        -749.437432273234,
-                        1449.87391214164,
-                        5351.7338198328
+                        -1447.5364337426,
+                        -48.9139026299224,
+                        4419.283709836
                       ]
                     ]
                   ]
@@ -14785,6 +14785,7 @@
                   "canSetExpression": true,
                   "canVaryOverTime": true,
                   "enabled": true,
+                  "isModified": true,
                   "matchName": "ADBE Scale",
                   "name": "Scale",
                   "propertyDepth": 2,
@@ -14794,16 +14795,16 @@
                   "selectedKeys": [],
                   "unitsText": "percent",
                   "value": [
-                    100,
-                    100,
+                    163.258418556182,
+                    61.0717424269648,
                     100
                   ],
                   "keyframes": [
                     [
                       0,
                       [
-                        100,
-                        100,
+                        163.258418556182,
+                        61.0717424269648,
                         100
                       ]
                     ]
@@ -14825,17 +14826,17 @@
                   "selectedKeys": [],
                   "unitsText": "degrees",
                   "value": [
-                    266.585820157844,
-                    359.838897989534,
-                    2.69836637705077
+                    26.4229609455256,
+                    322.226450686129,
+                    14.9985676774147
                   ],
                   "keyframes": [
                     [
                       0,
                       [
-                        266.585820157844,
-                        359.838897989534,
-                        2.69836637705077
+                        26.4229609455256,
+                        322.226450686129,
+                        14.9985676774147
                       ]
                     ]
                   ]
@@ -17557,7 +17558,6 @@
                 "Casts Shadows": {
                   "active": true,
                   "enabled": true,
-                  "isModified": true,
                   "matchName": "ADBE Casts Shadows",
                   "name": "Casts Shadows",
                   "propertyDepth": 2,
@@ -17565,11 +17565,10 @@
                   "propertyType": "PROPERTY",
                   "propertyValueType": "OneD",
                   "selectedKeys": [],
-                  "value": 1,
                   "keyframes": [
                     [
                       0,
-                      1
+                      0
                     ]
                   ]
                 },
@@ -17906,7 +17905,6 @@
                 },
                 "active": true,
                 "enabled": true,
-                "isModified": true,
                 "matchName": "ADBE Material Options Group",
                 "name": "Material Options",
                 "numProperties": 16,
@@ -18109,17 +18107,17 @@
                   "selectedKeys": [],
                   "unitsText": "pixels",
                   "value": [
-                    620.716099904514,
-                    212.717678250984,
-                    68.9224968669
+                    2087.50280552196,
+                    170.26628826352,
+                    4318.11660837533
                   ],
                   "keyframes": [
                     [
                       0,
                       [
-                        620.716099904514,
-                        212.717678250984,
-                        68.9224968669
+                        2087.50280552196,
+                        170.26628826352,
+                        4318.11660837533
                       ]
                     ]
                   ]
@@ -18203,17 +18201,17 @@
                   "selectedKeys": [],
                   "unitsText": "percent",
                   "value": [
-                    16,
-                    16,
-                    16
+                    138.646778262496,
+                    137.788391306019,
+                    100
                   ],
                   "keyframes": [
                     [
                       0,
                       [
-                        16,
-                        16,
-                        16
+                        138.646778262496,
+                        137.788391306019,
+                        100
                       ]
                     ]
                   ]
@@ -18234,17 +18232,17 @@
                   "selectedKeys": [],
                   "unitsText": "degrees",
                   "value": [
-                    318,
-                    161,
-                    22
+                    0.83967140106317,
+                    43.1112673320161,
+                    357.099777041919
                   ],
                   "keyframes": [
                     [
                       0,
                       [
-                        318,
-                        161,
-                        22
+                        0.83967140106317,
+                        43.1112673320161,
+                        357.099777041919
                       ]
                     ]
                   ]
@@ -21372,69 +21370,8 @@
       {
         "frameDuration": 1,
         "hasVideo": true,
-        "height": 480,
-        "id": 28,
-        "label": 1,
-        "name": "Track Solid 1",
-        "pixelAspect": 1,
-        "proxySource": null,
-        "typeName": "Footage",
-        "usedIn": [],
-        "width": 480,
-        "file": null,
-        "mainSource": {
-          "alphaMode": "STRAIGHT",
-          "color": [
-            1,
-            0.20000001788139,
-            0.87843143939972
-          ],
-          "fieldSeparationType": "OFF",
-          "isStill": true,
-          "loop": 1,
-          "premulColor": [
-            0,
-            0,
-            0
-          ],
-          "removePulldown": "OFF"
-        }
-      },
-      {
-        "frameDuration": 1,
-        "hasVideo": true,
-        "height": 480,
-        "id": 16,
-        "label": 1,
-        "name": "Track Solid 1",
-        "pixelAspect": 1,
-        "proxySource": null,
-        "typeName": "Footage",
-        "width": 480,
-        "file": null,
-        "mainSource": {
-          "alphaMode": "STRAIGHT",
-          "color": [
-            0.20000001788139,
-            1,
-            0.26274511218071
-          ],
-          "fieldSeparationType": "OFF",
-          "isStill": true,
-          "loop": 1,
-          "premulColor": [
-            0,
-            0,
-            0
-          ],
-          "removePulldown": "OFF"
-        }
-      },
-      {
-        "frameDuration": 1,
-        "hasVideo": true,
         "height": 1080,
-        "id": 30,
+        "id": 152,
         "label": 1,
         "name": "Dark Gray Solid 1",
         "pixelAspect": 1,
@@ -21459,106 +21396,6 @@
           ],
           "removePulldown": "OFF"
         }
-      },
-      {
-        "id": 15,
-        "label": 2,
-        "name": "Solids",
-        "numItems": 3,
-        "typeName": "Folder",
-        "items": [
-          {
-            "frameDuration": 1,
-            "hasVideo": true,
-            "height": 480,
-            "id": 28,
-            "label": 1,
-            "name": "Track Solid 1",
-            "pixelAspect": 1,
-            "proxySource": null,
-            "typeName": "Footage",
-            "usedIn": [],
-            "width": 480,
-            "file": null,
-            "mainSource": {
-              "alphaMode": "STRAIGHT",
-              "color": [
-                1,
-                0.20000001788139,
-                0.87843143939972
-              ],
-              "fieldSeparationType": "OFF",
-              "isStill": true,
-              "loop": 1,
-              "premulColor": [
-                0,
-                0,
-                0
-              ],
-              "removePulldown": "OFF"
-            }
-          },
-          {
-            "frameDuration": 1,
-            "hasVideo": true,
-            "height": 480,
-            "id": 16,
-            "label": 1,
-            "name": "Track Solid 1",
-            "pixelAspect": 1,
-            "proxySource": null,
-            "typeName": "Footage",
-            "width": 480,
-            "file": null,
-            "mainSource": {
-              "alphaMode": "STRAIGHT",
-              "color": [
-                0.20000001788139,
-                1,
-                0.26274511218071
-              ],
-              "fieldSeparationType": "OFF",
-              "isStill": true,
-              "loop": 1,
-              "premulColor": [
-                0,
-                0,
-                0
-              ],
-              "removePulldown": "OFF"
-            }
-          },
-          {
-            "frameDuration": 1,
-            "hasVideo": true,
-            "height": 1080,
-            "id": 30,
-            "label": 1,
-            "name": "Dark Gray Solid 1",
-            "pixelAspect": 1,
-            "proxySource": null,
-            "typeName": "Footage",
-            "width": 1080,
-            "file": null,
-            "mainSource": {
-              "alphaMode": "STRAIGHT",
-              "color": [
-                0.17647099494934,
-                0.17647099494934,
-                0.17647099494934
-              ],
-              "fieldSeparationType": "OFF",
-              "isStill": true,
-              "loop": 1,
-              "premulColor": [
-                0,
-                0,
-                0
-              ],
-              "removePulldown": "OFF"
-            }
-          }
-        ]
       }
     ]
   }

@@ -17,6 +17,7 @@ const VIDEO_WIDTH = 520;
 const aeCamera = comp.layers.find(x => x.matchName === 'ADBE Camera Layer');
 const keyframeData = aeCamera.properties.Transform.Position.keyframes;
 const keyframes = keyframeData.map(x => {
+  console.log(x[0])
   return {
     time: x[0],
     value: x[1]
@@ -78,10 +79,15 @@ function setupRenderer () {
       return m * x * Math.PI / 180;
     });
 
-    const geometry = new THREE.BoxGeometry(1, 1);
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
     // geometry.applyMatrix(new THREE.Matrix4().makeTranslation(-solid.width/4, -solid.height/4, 0))
 
-    const material = new THREE.MeshBasicMaterial({ color: 'red', side: THREE.DoubleSide });
+    const material = new THREE.MeshBasicMaterial({
+      color: 'white',
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.75
+    });
 
     const mesh = new THREE.Mesh(geometry, material);
     const anchorObject = new THREE.Object3D();
@@ -130,8 +136,8 @@ function setupRenderer () {
     0
   );
   const cameraOffset = new THREE.Vector3(-comp.width, -comp.height, -distance);
-  camera.position.z = -1;
-  camera.position.y = 0;
+  camera.position.z = -distance;
+  camera.position.y = -0.1;
   camera.lookAt(cameraOrigin);
 
   render();
@@ -143,6 +149,7 @@ function setupRenderer () {
 
   function render () {
     const value = timeline.value(video.currentTime || 0);
+    // console.log(video.currentTime)
     camera.position.fromArray(value);
     camera.position.add(cameraOffset);
     renderer.render(scene, camera);
