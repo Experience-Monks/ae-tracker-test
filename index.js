@@ -17,7 +17,6 @@ const VIDEO_WIDTH = 520;
 const aeCamera = comp.layers.find(x => x.matchName === 'ADBE Camera Layer');
 const keyframeData = aeCamera.properties.Transform.Position.keyframes;
 const keyframes = keyframeData.map(x => {
-  console.log(x[0])
   return {
     time: x[0],
     value: x[1]
@@ -64,7 +63,8 @@ function setupRenderer () {
   camera.aspect = comp.width / comp.height;
   camera.near = 1;
   camera.far = 50000;
-  camera.setLens(cameraData.focalLength, cameraData.filmWidth);
+  camera.filmGauge = cameraData.filmSize;
+  camera.setFocalLength(cameraData.focalLength);
 
   const distance = convert.millimeterToPixel(cameraData.zoom);
 
@@ -96,7 +96,7 @@ function setupRenderer () {
     mesh.scale.set(solid.width, solid.height, 1);
     mesh.scale.multiply(scaleVec);
     mesh.position.fromArray(position);
-    
+
     // XY is backwards in AE?
     mesh.position.x *= -1;
     mesh.position.y *= -1;
@@ -105,10 +105,6 @@ function setupRenderer () {
     mesh.position.x -= (solid.width / 2 - anchor[0]) * scale[0];
     mesh.position.y -= (solid.height / 2 - anchor[1]) * scale[1];
     mesh.position.z -= anchor[2] * scale[2];
-
-    // This line is not really clear to me,
-    // Z=0 in AE is Z=-distance here
-    mesh.position.z -= distance;
 
     mesh.rotation.fromArray(orientation);
     return mesh;
@@ -135,10 +131,13 @@ function setupRenderer () {
     0,
     0
   );
-  const cameraOffset = new THREE.Vector3(-comp.width, -comp.height, -distance);
+  // const cameraOffset = new THREE.Vector3();
+  const cameraOffset = new THREE.Vector3(-comp.width, comp.height, 0);
+
   camera.position.z = -distance;
-  camera.position.y = -0.1;
-  camera.lookAt(cameraOrigin);
+  camera.lookAt(new THREE.Vector3());
+
+  // camera.lookAt(cameraOrigin);
 
   render();
   createLoop(dt => {
@@ -149,9 +148,10 @@ function setupRenderer () {
 
   function render () {
     const value = timeline.value(video.currentTime || 0);
-    // console.log(video.currentTime)
     camera.position.fromArray(value);
-    camera.position.add(cameraOffset);
+    camera.position.y *= -1;
+    camera.position.x *= -1;
+
     renderer.render(scene, camera);
   }
 }
