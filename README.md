@@ -4,6 +4,8 @@
 
 Experimenting with AE 3D Camera Track -> JSON -> ThreeJS.
 
+Video source: https://vimeo.com/156474244
+
 ## Usage
 
 [![NPM](https://nodei.co/npm/ae-tracker-test.png)](https://www.npmjs.com/package/ae-tracker-test)

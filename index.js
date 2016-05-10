@@ -1,5 +1,4 @@
 require('babel-polyfill');
-global.THREE = require('three');
 
 const css = require('dom-css');
 const convert = require('./lib/ae-value');
@@ -7,30 +6,25 @@ const getAECameraData = require('./lib/ae-camera');
 const createVideo = require('simple-media-element').video;
 const events = require('dom-events');
 const createLoop = require('raf-loop');
-const timeline = require('keyframes')();
+const createTimeline = require('keyframes');
 const data = require('./out.json');
+
+const getPBRMesh = require('./lib/getPBRMesh');
 
 const comp = getCompositions(data)[0];
 
 const VIDEO_WIDTH = 520;
 
 const aeCamera = comp.layers.find(x => x.matchName === 'ADBE Camera Layer');
-const keyframeData = aeCamera.properties.Transform.Position.keyframes;
-const keyframes = keyframeData.map(x => {
-  return {
-    time: x[0],
-    value: x[1]
-  };
-});
-
-keyframes.forEach(frame => timeline.add(frame));
+const positionTimeline = buildTimeline(aeCamera.properties.Transform.Position);
+const orientationTimeline = buildTimeline(aeCamera.properties.Transform.Orientation);
 
 const solids = comp.layers.filter(x => x.matchName === 'ADBE AV Layer');
 
 document.body.style.margin = '0';
 document.body.style.overflow = 'hidden';
 
-const video = createVideo('trim-output.mp4', {
+const video = createVideo('drone-footage2.mp4', {
   loop: true
 });
 
@@ -48,8 +42,9 @@ function getCompositions (data) {
 
 function setupRenderer () {
   const aspect = video.videoWidth / video.videoHeight;
-  const renderer = new THREE.WebGLRenderer({ alpha: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(VIDEO_WIDTH, VIDEO_WIDTH / aspect);
+  renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setClearColor('#000', 0);
   css(renderer.domElement, {
     position: 'absolute',
@@ -66,8 +61,6 @@ function setupRenderer () {
   camera.filmGauge = cameraData.filmSize;
   camera.setFocalLength(cameraData.focalLength);
 
-  const distance = convert.millimeterToPixel(cameraData.zoom);
-
   const scene = new THREE.Scene();
   const solidObjects = solids.map(solid => {
     const Transform = solid.properties.Transform;
@@ -79,18 +72,16 @@ function setupRenderer () {
       return m * x * Math.PI / 180;
     });
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    // geometry.applyMatrix(new THREE.Matrix4().makeTranslation(-solid.width/4, -solid.height/4, 0))
-
-    const material = new THREE.MeshBasicMaterial({
-      color: 'white',
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.75
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    const anchorObject = new THREE.Object3D();
+    // Temp box geometry
+    // const geometry = new THREE.BoxGeometry(1, 1, 1);
+    // const material = new THREE.MeshBasicMaterial({
+    //   color: 'white',
+    //   side: THREE.DoubleSide,
+    //   transparent: true,
+    //   opacity: 0.75
+    // });
+    // const mesh = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Object3D();
 
     const scaleVec = new THREE.Vector3().fromArray(scale);
     mesh.scale.set(solid.width, solid.height, 1);
@@ -100,7 +91,7 @@ function setupRenderer () {
     // XY is backwards in AE?
     mesh.position.x *= -1;
     mesh.position.y *= -1;
-    
+
     // AE anchor (0, 0) is top left, ThreeJS is center
     mesh.position.x -= (solid.width / 2 - anchor[0]) * scale[0];
     mesh.position.y -= (solid.height / 2 - anchor[1]) * scale[1];
@@ -109,49 +100,78 @@ function setupRenderer () {
     mesh.rotation.fromArray(orientation);
     return mesh;
   });
-  solidObjects.forEach(obj => scene.add(obj));
 
-  // const test = new THREE.Mesh(new THREE.BoxGeometry(2, 2), new THREE.MeshBasicMaterial({ color: 'red' }));
-  // scene.add(test);
-  // test.scale.set(1080, 1080, 1);
-  // test.position.set(0, 0, -distance);
-
-  const zero = new THREE.Vector3();
-  
-  // const cameraContainer = new THREE.Object3D();
-  // cameraContainer.position.set(0, 0, distance);
-  // cameraContainer.add(camera);
-  // camera.lookAt(zero);
-  // scene.add(cameraContainer);
-
-//  camera.position.set(-comp.width, comp.height / 2, -distance)
-//  camera.lookAt(zero);
-  const cameraOrigin = new THREE.Vector3(
-    0,
-    0,
-    0
-  );
-  // const cameraOffset = new THREE.Vector3();
-  const cameraOffset = new THREE.Vector3(-comp.width, comp.height, 0);
-
-  camera.position.z = -distance;
-  camera.lookAt(new THREE.Vector3());
-
-  // camera.lookAt(cameraOrigin);
-
+  // solidObjects.forEach(obj => scene.add(obj));
   render();
-  createLoop(dt => {
+  const loop = createLoop(dt => {
     render();
-  })
-  .start();
+  }).start();
   video.play();
+  setupEnv();
 
   function render () {
-    const value = timeline.value(video.currentTime || 0);
-    camera.position.fromArray(value);
+    const timeStamp = video.currentTime || 0;
+    const position = positionTimeline.value(timeStamp);
+    camera.position.fromArray(position);
     camera.position.y *= -1;
     camera.position.x *= -1;
 
+    const orientation = orientationTimeline.value(timeStamp);
+    camera.rotation.x = -Math.PI + -orientation[0] * Math.PI / 180;
+    camera.rotation.y = orientation[1] * Math.PI / 180;
+    camera.rotation.z = -Math.PI + -orientation[2] * Math.PI / 180;
+
     renderer.render(scene, camera);
   }
+
+  function setupEnv () {
+    scene.add(new THREE.AmbientLight('#020102'));
+    const dir = new THREE.DirectionalLight('#f0dfaa', 1);
+    dir.position.set(-40, 60, 50);
+    scene.add(dir);
+
+    renderer.gammaInput = true;
+    renderer.gammaOutput = true;
+    renderer.gammaFactor = 2.2;
+
+    var dummies = solidObjects.map(obj => {
+      // reset props for our fancy 3D Mesh
+      // obj.rotation.set(0, 0, 0);
+      obj.scale.set(obj.scale.x, obj.scale.x, obj.scale.x);
+      return obj;
+    });
+
+    getPBRMesh({ renderer }, (err, material) => {
+      if (err) throw err;
+      const geometries = [
+        new THREE.TorusGeometry(1, 0.25, 128, 128),
+        new THREE.TorusKnotGeometry(1, 0.25, 256),
+        new THREE.BoxGeometry(1, 1, 1)
+      ];
+      
+      const meshes = dummies.map((dummy, i) => {
+        const geometry = geometries[i % geometries.length];
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.scale.multiplyScalar(0.35);
+        dummy.add(mesh);
+        scene.add(dummy);
+        return mesh;
+      });
+      loop.on('tick', dt => {
+        meshes.forEach((instance, i) => {
+          instance.rotation.z += dt / 1000 * -0.15;
+          // instance.rotation.x += dt / 1000;
+        });
+      });
+    });
+  }
+}
+
+function buildTimeline (node) {
+  return createTimeline(node.keyframes.map(d => {
+    return {
+      time: d[0],
+      value: d[1]
+    };
+  }));
 }
